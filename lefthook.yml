@@ -1,9 +1,9 @@
 pre-commit:
-  parallel: true
   commands:
-    check:
+    fix:
       glob: "*.{ts,json}"
-      run: npx biome check --no-errors-on-unmatched {staged_files}
+      run: npx biome check --fix --unsafe --no-errors-on-unmatched {staged_files}
+      stage_fixed: true
     typecheck:
       run: npx tsc --noEmit
 
