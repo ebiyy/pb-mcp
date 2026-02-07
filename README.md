@@ -189,6 +189,158 @@ The `status.id` required for Feature creation must be fetched in advance using `
 
 `releaseGroupId` is required when creating a Release. Create a Release Group with `create_release_group` before creating a Release.
 
+## Observed API Responses
+
+Actual response shapes captured during a Pro plan session (2026-02). Obtained via MCP tool calls. Error responses are MCP-layer representations — raw HTTP status codes were not visible through the MCP layer.
+
+### Successful responses
+
+All successful create/update responses share the `{ data: { ... } }` wrapper.
+
+**create_feature**
+
+```json
+{
+  "data": {
+    "id": "<uuid>",
+    "name": "<name>",
+    "description": "<p>...</p>\n",
+    "type": "feature",
+    "status": {
+      "id": "<status-uuid>",
+      "name": "In progress"
+    },
+    "parent": {
+      "component": {
+        "id": "<component-uuid>",
+        "links": { "self": "https://api.productboard.com/components/<component-uuid>" }
+      }
+    },
+    "links": {
+      "self": "https://api.productboard.com/features/<uuid>",
+      "html": "https://<workspace>.productboard.com/entity-detail/features/<uuid>"
+    },
+    "archived": false,
+    "timeframe": { "startDate": "none", "endDate": "none", "granularity": "none" },
+    "owner": null,
+    "createdAt": "<ISO8601>",
+    "updatedAt": "<ISO8601>",
+    "lastHealthUpdate": null
+  }
+}
+```
+
+**create_objective** — returns minimal data (id + links only), unlike other entities.
+
+```json
+{
+  "data": { "id": "<uuid>" },
+  "links": {
+    "self": "https://api.productboard.com/objectives/<uuid>",
+    "html": "https://<workspace>.productboard.com/data/objectives?d=<base64>"
+  }
+}
+```
+
+**create_release**
+
+```json
+{
+  "data": {
+    "id": "<uuid>",
+    "name": "<name>",
+    "description": "<p>...</p>\n",
+    "archived": false,
+    "releaseGroup": {
+      "id": "<release-group-uuid>",
+      "links": { "self": "https://api.productboard.com/release-groups/<release-group-uuid>" }
+    },
+    "timeframe": { "startDate": "none", "endDate": "none", "granularity": "none" },
+    "state": "in-progress",
+    "links": { "self": "https://api.productboard.com/releases/<uuid>" }
+  }
+}
+```
+
+**update_product**
+
+```json
+{
+  "data": {
+    "id": "<uuid>",
+    "name": "<name>",
+    "description": "<p>...</p>\n",
+    "links": {
+      "self": "https://api.productboard.com/products/<uuid>",
+      "html": "https://<workspace>.productboard.com/entity-detail/features/<uuid>"
+    },
+    "owner": { "email": "<email>" },
+    "createdAt": "<ISO8601>",
+    "updatedAt": "<ISO8601>"
+  }
+}
+```
+
+**create_component**
+
+```json
+{
+  "data": {
+    "id": "<uuid>",
+    "name": "<name>",
+    "description": "<p>...</p>\n",
+    "links": {
+      "self": "https://api.productboard.com/components/<uuid>",
+      "html": "https://<workspace>.productboard.com/entity-detail/features/<uuid>"
+    },
+    "parent": {
+      "product": {
+        "id": "<product-uuid>",
+        "links": { "self": "https://api.productboard.com/products/<product-uuid>" }
+      }
+    },
+    "owner": null,
+    "createdAt": "<ISO8601>",
+    "updatedAt": "<ISO8601>"
+  }
+}
+```
+
+**create_release_group**
+
+```json
+{
+  "data": {
+    "id": "<uuid>",
+    "name": "<name>",
+    "description": "<p>...</p>\n",
+    "archived": false,
+    "links": { "self": "https://api.productboard.com/release-groups/<uuid>" }
+  }
+}
+```
+
+### Error responses (MCP layer)
+
+Raw HTTP error responses were not visible. These are the MCP-level error messages observed:
+
+| Trigger | MCP error code | Message |
+|---|---|---|
+| Plain text description (Objective) | `-32600` | `Element 'body' cannot have character [children], because the type's content type is element-only.` |
+| Both status.id and status.name | `-32603` | `Both status.id an status.name were specified, please specify just one of them.` |
+| create_note (any payload) | `-32600` | `Validation error` |
+
+MCP error `-32600` maps to JSON-RPC "Invalid Request". Whether the underlying HTTP status is 400, 422, or something else is unknown — the MCP layer does not expose it.
+
+### What is NOT known
+
+| Item | Status |
+|---|---|
+| Raw HTTP status codes for errors | Hidden by MCP layer |
+| Error response JSON body structure | Hidden by MCP layer |
+| API token format | Not examined in this session |
+| Root cause of Notes API failure | Pro plan confirmed, but whether it's a plan or token permission issue is unconfirmed |
+
 ## License
 
 MIT
