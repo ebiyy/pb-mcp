@@ -83,10 +83,13 @@ export function createClient(token: string, options?: ClientOptions) {
 		get(path: string, params?: Record<string, unknown>) {
 			return request('GET', path, undefined, params);
 		},
-		post(path: string, body: Record<string, unknown>) {
+		post(path: string, body?: Record<string, unknown>) {
 			return request('POST', path, body);
 		},
-		patch(path: string, body: Record<string, unknown>) {
+		put(path: string, body?: Record<string, unknown>) {
+			return request('PUT', path, body);
+		},
+		patch(path: string, body?: Record<string, unknown>) {
 			return request('PATCH', path, body);
 		},
 		delete(path: string) {

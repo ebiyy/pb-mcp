@@ -65,6 +65,31 @@ describe('createClient', () => {
 		});
 	});
 
+	it('PUT request sends JSON body wrapped in data', async () => {
+		const fetch = mockFetch(200, { data: { id: '1' } });
+		client = createClient(TOKEN, { fetch });
+
+		await client.put('/features/abc', { name: 'Replaced' });
+
+		const [url, init] = fetch.mock.calls[0]!;
+		expect(url).toBe('https://api.productboard.com/features/abc');
+		expect(init?.method).toBe('PUT');
+		expect(JSON.parse(init?.body as string)).toEqual({
+			data: { name: 'Replaced' },
+		});
+	});
+
+	it('POST without body sends no body', async () => {
+		const fetch = mockFetch(200, { data: {} });
+		client = createClient(TOKEN, { fetch });
+
+		await client.post('/notes/n1/tags/t1');
+
+		const [, init] = fetch.mock.calls[0]!;
+		expect(init?.method).toBe('POST');
+		expect(init?.body).toBeUndefined();
+	});
+
 	it('DELETE request sends no body', async () => {
 		const fetch = mockFetch(204, null);
 		client = createClient(TOKEN, { fetch });

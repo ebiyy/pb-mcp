@@ -135,6 +135,20 @@ describe('tool execution', () => {
 		expect(init?.method).toBe('DELETE');
 	});
 
+	// --- wrap: 'none' (ボディなし POST) ---
+
+	it('add_note_tag (wrap: none) sends POST without body', async () => {
+		const fetch = mockFetch(200, { data: {} });
+		const server = createPbMcpServer(TOKEN, { fetch });
+
+		await server.callTool('add_note_tag', { noteId: 'n1', tagName: 'urgent' });
+
+		const [url, init] = fetch.mock.calls[0]!;
+		expect(url).toContain('/notes/n1/tags/urgent');
+		expect(init?.method).toBe('POST');
+		expect(init?.body).toBeUndefined();
+	});
+
 	// --- エラーハンドリング ---
 
 	it('API error returns MCP error response', async () => {

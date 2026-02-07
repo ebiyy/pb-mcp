@@ -41,18 +41,19 @@ export function createPbMcpServer(token: string, options?: { fetch?: typeof fetc
 
 		try {
 			let data: unknown;
+			const body = def.wrap === 'none' ? undefined : remaining;
 			switch (def.method) {
 				case 'GET':
 					data = await client.get(path, remaining);
 					break;
 				case 'POST':
-					data = await client.post(path, remaining);
+					data = await client.post(path, body);
 					break;
 				case 'PATCH':
-					data = await client.patch(path, remaining);
+					data = await client.patch(path, body);
 					break;
 				case 'PUT':
-					data = await client.post(path, remaining);
+					data = await client.put(path, body);
 					break;
 				case 'DELETE':
 					data = await client.delete(path);
