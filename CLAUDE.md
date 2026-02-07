@@ -1,9 +1,12 @@
-# pb-mcp — Productboard MCP Server (v2 rewrite)
+# pb-mcp — Productboard MCP Server
+
+> **READ-ONLY**: このプロジェクトはコードフリーズ済み。コード変更は行わない。
+> 普遍的な知見は `~/.claude/memory/` に昇格済み。
 
 ## What This Is
 
 Productboard REST API を MCP プロトコル経由で操作する薄いアダプター。
-旧リポジトリ (`productboard-mcp`) の 25,000行を TDD でゼロから書き直している。
+旧リポジトリ (`productboard-mcp`) の 25,000行を TDD でゼロから書き直したもの。
 
 ## Commands
 
@@ -69,14 +72,14 @@ Base URL: https://api.productboard.com (固定、変更不可)
 ## Body Wrapping
 
 Productboard API は POST/PATCH で `{ data: { ...body } }` 形式を要求する。
-ToolDef の `wrap: 'data'` で制御。
+ToolDef の `bodyStyle: 'data'` で制御。ボディ不要な POST は `bodyStyle: 'omit'`。
 
-## Current Status
+## Test Summary
 
-TDD フェーズ。テスト先行で実装中。
-- `client.test.ts` — 14 tests (API クライアント I/O)
+64 tests passing:
+- `client.test.ts` — 18 tests (API クライアント I/O)
 - `tools.test.ts` — 32 tests (ツール定義構造)
-- `server.test.ts` — 13 tests (MCP 統合)
+- `server.test.ts` — 14 tests (MCP 統合)
 
 ## Reference
 
