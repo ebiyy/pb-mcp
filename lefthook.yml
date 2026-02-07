@@ -1,0 +1,13 @@
+pre-commit:
+  parallel: true
+  commands:
+    check:
+      glob: "*.{ts,json}"
+      run: npx biome check --no-errors-on-unmatched {staged_files}
+    typecheck:
+      run: npx tsc --noEmit
+
+pre-push:
+  commands:
+    test:
+      run: npx vitest run
