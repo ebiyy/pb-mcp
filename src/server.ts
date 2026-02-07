@@ -41,7 +41,7 @@ export function createPbMcpServer(token: string, options?: { fetch?: typeof fetc
 
 		try {
 			let data: unknown;
-			const body = def.wrap === 'none' ? undefined : remaining;
+			const body = def.bodyStyle === 'omit' ? undefined : remaining;
 			switch (def.method) {
 				case 'GET':
 					data = await client.get(path, remaining);
@@ -69,9 +69,14 @@ export function createPbMcpServer(token: string, options?: { fetch?: typeof fetc
 				error instanceof Error && 'status' in error
 					? (error as Error & { status: number }).status
 					: undefined;
+			const body =
+				error instanceof Error && 'body' in error
+					? (error as Error & { body: Record<string, unknown> }).body
+					: undefined;
+			const detail = body ? ` | ${JSON.stringify(body)}` : '';
 			throw new McpError(
 				status === 404 ? ErrorCode.InvalidRequest : ErrorCode.InternalError,
-				error instanceof Error ? error.message : String(error),
+				`${error instanceof Error ? error.message : String(error)}${detail}`,
 			);
 		}
 	}

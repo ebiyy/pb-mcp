@@ -170,6 +170,17 @@ describe('createClient', () => {
 		});
 	});
 
+	it('error preserves full response body for debugging', async () => {
+		const errorResponse = { message: 'Validation error', errors: [{ field: 'title' }] };
+		const fetch = mockFetch(422, errorResponse);
+		client = createClient(TOKEN, { fetch });
+
+		await expect(client.post('/notes', { title: '' })).rejects.toMatchObject({
+			status: 422,
+			body: errorResponse,
+		});
+	});
+
 	it('network error (fetch rejects) propagates', async () => {
 		const fetchFn = vi.fn<typeof fetch>().mockRejectedValue(new TypeError('fetch failed'));
 		client = createClient(TOKEN, { fetch: fetchFn });
@@ -181,6 +192,10 @@ describe('createClient', () => {
 
 	it('rejects non-productboard baseUrl', () => {
 		expect(() => createClient(TOKEN, { baseUrl: 'https://evil.com' })).toThrow();
+	});
+
+	it('rejects suffix-matching domain (evilproductboard.com)', () => {
+		expect(() => createClient(TOKEN, { baseUrl: 'https://evilproductboard.com' })).toThrow();
 	});
 
 	it('accepts valid productboard baseUrl', () => {

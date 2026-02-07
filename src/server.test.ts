@@ -135,9 +135,9 @@ describe('tool execution', () => {
 		expect(init?.method).toBe('DELETE');
 	});
 
-	// --- wrap: 'none' (ボディなし POST) ---
+	// --- bodyStyle: 'omit' (ボディなし POST) ---
 
-	it('add_note_tag (wrap: none) sends POST without body', async () => {
+	it('add_note_tag (bodyStyle: omit) sends POST without body', async () => {
 		const fetch = mockFetch(200, { data: {} });
 		const server = createPbMcpServer(TOKEN, { fetch });
 

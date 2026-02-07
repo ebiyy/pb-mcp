@@ -3,7 +3,7 @@ export interface ToolDef {
 	description: string;
 	method: 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 	path: string;
-	wrap?: 'data' | 'none';
+	bodyStyle?: 'data' | 'omit';
 	inputSchema: {
 		type: 'object';
 		properties: Record<string, unknown>;
@@ -50,7 +50,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Create a new feature',
 		method: 'POST',
 		path: '/features',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -68,7 +68,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Update an existing feature',
 		method: 'PATCH',
 		path: '/features/{id}',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -86,7 +86,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Delete a feature',
 		method: 'DELETE',
 		path: '/features/{id}',
-		wrap: 'none',
+		bodyStyle: 'omit',
 		inputSchema: {
 			type: 'object',
 			properties: { id },
@@ -127,7 +127,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Create a new note',
 		method: 'POST',
 		path: '/notes',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -146,7 +146,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Update an existing note',
 		method: 'PATCH',
 		path: '/notes/{id}',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -163,7 +163,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Delete a note',
 		method: 'DELETE',
 		path: '/notes/{id}',
-		wrap: 'none',
+		bodyStyle: 'omit',
 		inputSchema: {
 			type: 'object',
 			properties: { id },
@@ -188,7 +188,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Add a tag to a note',
 		method: 'POST',
 		path: '/notes/{noteId}/tags/{tagName}',
-		wrap: 'none',
+		bodyStyle: 'omit',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -203,7 +203,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Remove a tag from a note',
 		method: 'DELETE',
 		path: '/notes/{noteId}/tags/{tagName}',
-		wrap: 'none',
+		bodyStyle: 'omit',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -244,7 +244,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Create a new company',
 		method: 'POST',
 		path: '/companies',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -261,7 +261,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Update a company',
 		method: 'PATCH',
 		path: '/companies/{id}',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -278,7 +278,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Delete a company',
 		method: 'DELETE',
 		path: '/companies/{id}',
-		wrap: 'none',
+		bodyStyle: 'omit',
 		inputSchema: {
 			type: 'object',
 			properties: { id },
@@ -313,7 +313,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Create a new objective',
 		method: 'POST',
 		path: '/objectives',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -331,7 +331,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Update an objective',
 		method: 'PATCH',
 		path: '/objectives/{id}',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -348,7 +348,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Delete an objective',
 		method: 'DELETE',
 		path: '/objectives/{id}',
-		wrap: 'none',
+		bodyStyle: 'omit',
 		inputSchema: {
 			type: 'object',
 			properties: { id },
@@ -383,7 +383,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Create a new initiative',
 		method: 'POST',
 		path: '/initiatives',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -400,7 +400,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Update an initiative',
 		method: 'PATCH',
 		path: '/initiatives/{id}',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -416,7 +416,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Delete an initiative',
 		method: 'DELETE',
 		path: '/initiatives/{id}',
-		wrap: 'none',
+		bodyStyle: 'omit',
 		inputSchema: {
 			type: 'object',
 			properties: { id },
@@ -451,7 +451,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Create a new key result',
 		method: 'POST',
 		path: '/key-results',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -468,7 +468,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Update a key result',
 		method: 'PATCH',
 		path: '/key-results/{id}',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -485,7 +485,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Delete a key result',
 		method: 'DELETE',
 		path: '/key-results/{id}',
-		wrap: 'none',
+		bodyStyle: 'omit',
 		inputSchema: {
 			type: 'object',
 			properties: { id },
@@ -523,7 +523,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Create a new release',
 		method: 'POST',
 		path: '/releases',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -541,7 +541,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Update a release',
 		method: 'PATCH',
 		path: '/releases/{id}',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -559,7 +559,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Delete a release',
 		method: 'DELETE',
 		path: '/releases/{id}',
-		wrap: 'none',
+		bodyStyle: 'omit',
 		inputSchema: {
 			type: 'object',
 			properties: { id },
@@ -594,7 +594,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Create a webhook subscription',
 		method: 'POST',
 		path: '/webhooks',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -611,7 +611,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Delete a webhook',
 		method: 'DELETE',
 		path: '/webhooks/{id}',
-		wrap: 'none',
+		bodyStyle: 'omit',
 		inputSchema: {
 			type: 'object',
 			properties: { id },
@@ -646,7 +646,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Create a new user',
 		method: 'POST',
 		path: '/users',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -662,7 +662,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Update a user',
 		method: 'PATCH',
 		path: '/users/{id}',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -678,7 +678,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Delete a user',
 		method: 'DELETE',
 		path: '/users/{id}',
-		wrap: 'none',
+		bodyStyle: 'omit',
 		inputSchema: {
 			type: 'object',
 			properties: { id },
@@ -713,7 +713,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Update a product',
 		method: 'PATCH',
 		path: '/products/{id}',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -755,7 +755,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Create a new component',
 		method: 'POST',
 		path: '/components',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {
@@ -771,7 +771,7 @@ export const toolDefs: ToolDef[] = [
 		description: 'Update a component',
 		method: 'PATCH',
 		path: '/components/{id}',
-		wrap: 'data',
+		bodyStyle: 'data',
 		inputSchema: {
 			type: 'object',
 			properties: {

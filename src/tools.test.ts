@@ -102,11 +102,13 @@ describe('toolDefs', () => {
 	// --- body wrapping 検証 ---
 
 	describe('body wrapping', () => {
-		it('POST/PATCH/PUT tools that send body have wrap flag', () => {
+		it('POST/PATCH/PUT tools that send body have bodyStyle flag', () => {
 			const writingTools = toolDefs.filter((t) => ['POST', 'PATCH', 'PUT'].includes(t.method));
 			for (const def of writingTools) {
-				// Tools that modify data should indicate whether body needs { data: ... } wrapping
-				expect(def.wrap, `${def.name} should specify wrap ('data' | 'none')`).toBeDefined();
+				expect(
+					def.bodyStyle,
+					`${def.name} should specify bodyStyle ('data' | 'omit')`,
+				).toBeDefined();
 			}
 		});
 	});

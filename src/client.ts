@@ -2,12 +2,14 @@ const DEFAULT_BASE_URL = 'https://api.productboard.com';
 
 class ApiError extends Error {
 	readonly status: number;
+	readonly body: Record<string, unknown>;
 	readonly retryAfter?: number;
 
-	constructor(status: number, message: string, retryAfter?: number) {
+	constructor(status: number, message: string, body: Record<string, unknown>, retryAfter?: number) {
 		super(message);
 		this.name = 'ApiError';
 		this.status = status;
+		this.body = body;
 		if (retryAfter !== undefined) {
 			this.retryAfter = retryAfter;
 		}
@@ -23,8 +25,9 @@ export function createClient(token: string, options?: ClientOptions) {
 	const baseUrl = options?.baseUrl ?? DEFAULT_BASE_URL;
 	const fetchFn = options?.fetch ?? globalThis.fetch;
 
-	if (!new URL(baseUrl).hostname.endsWith('productboard.com')) {
-		throw new Error('Invalid baseUrl: must be a productboard.com domain');
+	const parsedUrl = new URL(baseUrl);
+	if (parsedUrl.hostname !== 'api.productboard.com') {
+		throw new Error(`Invalid baseUrl: ${parsedUrl.hostname}`);
 	}
 
 	const headers: Record<string, string> = {
@@ -68,6 +71,7 @@ export function createClient(token: string, options?: ClientOptions) {
 			throw new ApiError(
 				response.status,
 				typeof errorBody.message === 'string' ? errorBody.message : `HTTP ${response.status}`,
+				errorBody,
 				retryAfterHeader ? Number(retryAfterHeader) : undefined,
 			);
 		}
