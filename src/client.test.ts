@@ -105,11 +105,11 @@ describe('createClient', () => {
 		const fetch = mockFetch(200, { data: [] });
 		client = createClient(TOKEN, { fetch });
 
-		await client.get('/features', { limit: 10, archived: true });
+		await client.get('/features', { pageLimit: 10, archived: true });
 
 		const [url] = fetch.mock.calls[0]!;
 		const parsed = new URL(url as string);
-		expect(parsed.searchParams.get('limit')).toBe('10');
+		expect(parsed.searchParams.get('pageLimit')).toBe('10');
 		expect(parsed.searchParams.get('archived')).toBe('true');
 	});
 

@@ -13,8 +13,8 @@ export interface ToolDef {
 
 const id = { type: 'string', description: 'Resource ID' };
 const pagination = {
-	limit: { type: 'number', description: 'Max items to return (1-100)' },
-	offset: { type: 'number', description: 'Pagination offset' },
+	pageLimit: { type: 'number', description: 'Max items per page (1-100)' },
+	pageCursor: { type: 'string', description: 'Cursor for next page from links.next' },
 };
 
 export const toolDefs: ToolDef[] = [
